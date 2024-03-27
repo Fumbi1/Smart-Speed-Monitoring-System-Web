@@ -24,7 +24,7 @@ const BASE_URL = 'http://192.168.43.252/';
 //   return { isRunning, error };
 // };
 
-const useRecentTrespassers = (numberOfResults = 1) => {
+export const useRecentTrespassers = (numberOfResults = 1) => {
   const [trespassers, setTrespassers] = useState([]);
   const [error, setError] = useState(null);
 
@@ -46,7 +46,7 @@ const useRecentTrespassers = (numberOfResults = 1) => {
   return { trespassers, error };
 };
 
-export {
+export default {
   // useSystemState,
   useRecentTrespassers,
 };

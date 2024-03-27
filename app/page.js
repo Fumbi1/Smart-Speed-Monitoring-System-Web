@@ -19,7 +19,8 @@ export default function Home() {
         <div className="cir_1"></div>
 
         <div className="cir_2">
-          <p className="indicator1">300</p>
+          <p className="indicator3">Speed Limit:</p>
+          <p className="indicator1">40</p>
           <p className="indicator2">Km/hr</p>
         </div>
       </div>

@@ -61,6 +61,20 @@
   line-height: normal;
 }
 
+.indicator3 {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -60%);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: Montserrat;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
 .section2 {
   width: 100%;
 }

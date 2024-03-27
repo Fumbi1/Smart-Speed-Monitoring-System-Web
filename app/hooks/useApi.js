@@ -10,12 +10,15 @@ export const useSystemState = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
         const response = await axios.get(BASE_URL + 'state');
-        setIsRunning(response.data.startsWith('Success'));
-      } catch (error) {
-        setError(error);
-      }
+        if(!response.ok){
+          console.log('Request failed')
+          setIsRunning('The system is not working')
+        }
+          else{
+          console.log('Request successfull!')
+            setIsRunnnig('The system is working')
+      } 
     };
 
     fetchData();

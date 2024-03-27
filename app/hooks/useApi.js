@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const BASE_URL = 'http://192.168.43.252/';
 
-const useSystemState = () => {
+export const useSystemState = () => {
   const [isRunning, setIsRunning] = useState(null);
   const [error, setError] = useState(null);
 
@@ -24,7 +24,7 @@ const useSystemState = () => {
   return { isRunning, error };
 };
 
-const useRecentTrespassers = (numberOfResults = 1) => {
+export const useRecentTrespassers = (numberOfResults = 1) => {
   const [trespassers, setTrespassers] = useState([]);
   const [error, setError] = useState(null);
 
@@ -46,7 +46,7 @@ const useRecentTrespassers = (numberOfResults = 1) => {
   return { trespassers, error };
 };
 
-export default {
-  useSystemState,
-  useRecentTrespassers,
-};
+//export default {
+ // useSystemState,
+ // useRecentTrespassers,
+//};

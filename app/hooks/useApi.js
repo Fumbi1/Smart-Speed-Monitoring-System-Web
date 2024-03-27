@@ -4,25 +4,25 @@ import axios from 'axios';
 
 const BASE_URL = 'http://192.168.43.252/';
 
-const useSystemState = () => {
-  const [isRunning, setIsRunning] = useState(null);
-  const [error, setError] = useState(null);
+// const useSystemState = () => {
+//   const [isRunning, setIsRunning] = useState(null);
+//   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(BASE_URL + 'state');
-        setIsRunning(response.data.startsWith('Success'));
-      } catch (error) {
-        setError(error);
-      }
-    };
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await axios.get(BASE_URL + 'state');
+//         setIsRunning(response.data.startsWith('Success'));
+//       } catch (error) {
+//         setError(error);
+//       }
+//     };
 
-    fetchData();
-  }, [isRunning]);
+//     fetchData();
+//   }, [isRunning]);
 
-  return { isRunning, error };
-};
+//   return { isRunning, error };
+// };
 
 const useRecentTrespassers = (numberOfResults = 1) => {
   const [trespassers, setTrespassers] = useState([]);
@@ -46,7 +46,7 @@ const useRecentTrespassers = (numberOfResults = 1) => {
   return { trespassers, error };
 };
 
-export default {
-  useSystemState,
+export {
+  // useSystemState,
   useRecentTrespassers,
 };

@@ -3,6 +3,7 @@ import "./page.css";
 import { useRecentTrespassers } from "./hooks/useApi";
 import { useState } from "react";
 
+
 export default function Home() {
   const { trespassers, error: trespassError } = useRecentTrespassers(2);
   const [trespasserImages, setTrespasserImages] = useState({}); // State for image data

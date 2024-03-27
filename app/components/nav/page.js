@@ -1,13 +1,31 @@
+"use client"
 import './nav.css'
-import { useSystemState } from "../../hooks/useApi";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 
 function Nav() {
+    
+    // const { isRunning, error: stateError } = useSystemState();
+    
+    const BASE_URL = 'http://192.168.43.252/';
+    const [isRunning, setIsRunning] = useState(null);
 
-    const { isRunning, error: stateError } = useSystemState();
+  useEffect(() => {
+    const fetchData = async () => {
+        const response = await axios.get(BASE_URL + 'state');
+      if(!response.ok){
+        console.log(!response.ok)
+        setIsRunning("System is not working");
+      } else {
+        console.log(response.ok)
+        setIsRunning("The system is working");
+      }
+      
+    };
 
-    if (stateError) {
-        return <p>Error: {stateError.message}</p>; // Display error message
-    }
+    fetchData();
+  }, [isRunning]);
       
 
   return <div>

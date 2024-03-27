@@ -1,95 +1,56 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import "./page.css";
+import { useRecentTrespassers } from "./hooks/useApi";
+import { useState } from "react";
 
 export default function Home() {
+  const { trespassers, error: trespassError } = useRecentTrespassers(2);
+  const [trespasserImages, setTrespasserImages] = useState({}); // State for image data
+  const [imageErrors, setImageErrors] = useState({}); // State for image loading errors
+
+  if (trespassError) {
+    return <p>Error: {trespassError.message}</p>; // Display error message
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main>
+      <div className="speedometer">
+        <div className="cir_1"></div>
+
+        <div className="cir_2">
+          <p className="indicator1">300</p>
+          <p className="indicator2">Km/hr</p>
         </div>
       </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="section2">
+        <div className="tab">
+          <div>
+            <h2 className="a">Latest Trespassers</h2>
+            <ul>
+              {Object.entries(trespassers).map(([key, trespasser]) => (
+                <li key={key}>
+                  <p>Speed: {trespasser.speed} kmph</p>
+                  <p>Date: {trespasser.date}</p>
+                  {trespasserImages[key] ? (
+                    <img
+                      src={`data:image/jpeg;base64,${setTrespasserImages(trespasserImages[key])}`} // Construct image URL
+                      alt="Trespasser Image"
+                      onError={() =>
+                        setImageErrors({ ...imageErrors, [key]: true })
+                      } // Handle image loading errors
+                    />
+                  ) : imageErrors[key] ? (
+                    <p>Error loading image</p>
+                  ) : (
+                    <p>Loading image...</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </main>
-  )
+  );
 }

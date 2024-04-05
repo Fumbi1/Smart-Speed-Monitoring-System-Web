@@ -6,12 +6,16 @@ import { useState } from "react";
 
 export default function Home() {
   const { trespassers, error: trespassError } = useRecentTrespassers(2);
-  const [trespasserImages, setTrespasserImages] = useState({}); // State for image data
   const [imageErrors, setImageErrors] = useState({}); // State for image loading errors
 
-  if (trespassError) {
-    return <p>Error: {trespassError.message}</p>; // Display error message
-  }
+  const handleImageError = (key) => {
+    setImageErrors((prevErrors) => ({
+      ...prevErrors,
+      [key]: true
+    }));
+  };
+
+
 
   return (
     <main>
@@ -26,26 +30,25 @@ export default function Home() {
       </div>
 
       <div className="section2">
+            <h2 className="a">Latest Trespassers</h2>
         <div className="tab">
           <div>
-            <h2 className="a">Latest Trespassers</h2>
             <ul>
+              <p className="err">{trespassError && `Error: ${trespassError.message}, please try again later.`}</p>
               {Object.entries(trespassers).map(([key, trespasser]) => (
                 <li key={key}>
-                  <p>Speed: {trespasser.speed} kmph</p>
-                  <p>Date: {trespasser.date}</p>
-                  {trespasserImages[key] ? (
+                  <p className="details">Speed: {trespasser.speed} kmph</p>
+                  <p className="details">Date: {trespasser.date}</p>
+                  {trespasser.ImageBytes ? (
                     <img
-                      src={`data:image/jpeg;base64,${setTrespasserImages(trespasserImages[key])}`} // Construct image URL
+                    src={`data:image/jpeg;base64,${trespasser.ImageBytes}`} // Construct image URL
                       alt="Trespasser Image"
-                      onError={() =>
-                        setImageErrors({ ...imageErrors, [key]: true })
-                      } // Handle image loading errors
+                      onError={() => handleImageError(key)}// Handle image loading errors
                     />
                   ) : imageErrors[key] ? (
-                    <p>Error loading image</p>
+                    <p className="details">Error loading image</p>
                   ) : (
-                    <p>Loading image...</p>
+                    <p className="details">Loading image...</p>
                   )}
                 </li>
               ))}

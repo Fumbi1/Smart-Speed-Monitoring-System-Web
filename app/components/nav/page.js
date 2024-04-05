@@ -12,16 +12,15 @@ function Nav() {
     const [isRunning, setIsRunning] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-        const response = await axios.get(BASE_URL + 'state');
-      if(!response.ok){
-        console.log(!response.ok)
-        setIsRunning("System is not working");
-      } else {
-        console.log(response.ok)
-        setIsRunning("The system is working");
-      }
-      
+    const fetchData = () => {
+      axios.get(BASE_URL + 'state')
+        .then(response => {
+          setIsRunning('The system is working');
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          setIsRunning('System is not working');
+        });
     };
 
     fetchData();
